@@ -1,4 +1,4 @@
-package net.ledestudios.streambridge.chzzk;
+package net.ledestudios.streambridge.chzzk.channel;
 
 import org.jetbrains.annotations.NotNull;
 
