@@ -1,6 +1,6 @@
 package net.ledestudios.streambridge.chzzk;
 
-import net.ledestudios.streambridge.utils.Chrome;
+import net.ledestudios.streambridge.util.Chrome;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.openqa.selenium.*;
