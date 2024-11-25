@@ -64,6 +64,10 @@ public class Naver {
         });
     }
 
+    public boolean isAnonymous() {
+        return aut == null || ses == null;
+    }
+
     public @NotNull String getId() {
         return id;
     }
