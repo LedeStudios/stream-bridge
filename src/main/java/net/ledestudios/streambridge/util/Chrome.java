@@ -1,4 +1,4 @@
-package net.ledestudios.streambridge.utils;
+package net.ledestudios.streambridge.util;
 
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
