@@ -2,7 +2,7 @@ package net.ledestudios.streambridge.net;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import net.ledestudios.streambridge.chzzk.Chzzk;
+import net.ledestudios.streambridge.service.chzzk.Chzzk;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

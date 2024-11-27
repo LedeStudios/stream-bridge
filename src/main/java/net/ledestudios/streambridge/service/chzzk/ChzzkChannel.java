@@ -1,10 +1,10 @@
-package net.ledestudios.streambridge.chzzk;
+package net.ledestudios.streambridge.service.chzzk;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import net.ledestudios.streambridge.chzzk.type.*;
 import net.ledestudios.streambridge.net.ChzzkHttpService;
+import net.ledestudios.streambridge.service.chzzk.type.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

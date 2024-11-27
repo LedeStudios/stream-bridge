@@ -1,10 +1,10 @@
 package chzzk;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import net.ledestudios.streambridge.chzzk.Chzzk;
-import net.ledestudios.streambridge.chzzk.ChzzkChannel;
-import net.ledestudios.streambridge.naver.Naver;
-import net.ledestudios.streambridge.chzzk.type.ChzzkFollower;
+import net.ledestudios.streambridge.service.chzzk.Chzzk;
+import net.ledestudios.streambridge.service.chzzk.ChzzkChannel;
+import net.ledestudios.streambridge.service.naver.Naver;
+import net.ledestudios.streambridge.service.chzzk.type.ChzzkFollower;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
