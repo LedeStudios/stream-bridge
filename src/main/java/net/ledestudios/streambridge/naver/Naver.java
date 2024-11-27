@@ -1,4 +1,4 @@
-package net.ledestudios.streambridge.chzzk;
+package net.ledestudios.streambridge.naver;
 
 import net.ledestudios.streambridge.util.Chrome;
 import org.jetbrains.annotations.NotNull;
