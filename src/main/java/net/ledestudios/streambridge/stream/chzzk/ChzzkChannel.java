@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import net.ledestudios.streambridge.net.http.ChzzkHttpService;
+import net.ledestudios.streambridge.net.ws.ChzzkWebsocketClientHandler;
 import net.ledestudios.streambridge.stream.chzzk.chat.ChzzkChatClient;
 import net.ledestudios.streambridge.stream.chzzk.type.*;
 import org.jetbrains.annotations.NotNull;
@@ -43,14 +44,23 @@ public class ChzzkChannel {
         return gson.fromJson(json, ChzzkLiveStatus.class);
     }
 
-    public @NotNull CompletableFuture<String> getChatChannelUrlAsync() {
-        return CompletableFuture.supplyAsync(this::getChatChannelUrl);
+    public @NotNull CompletableFuture<String> getChatAccessTokenAsync() {
+        return CompletableFuture.supplyAsync(this::getChatAccessToken);
     }
 
-    public @NotNull String getChatChannelUrl() {
+    public @NotNull String getChatAccessToken() {
         return String.format(
                 "https://comm-api.game.naver.com/nng_main/v1/chats/access-token?channelId=%s&chatType=STREAMING",
                 getLiveStatus().getChatChannelId());
+    }
+
+    public @NotNull String getChatWebsocketUrl() {
+        int serverId = 0;
+        for (char i : channel.toCharArray()) {
+            serverId += Character.getNumericValue(i);
+        }
+        serverId = Math.abs(serverId) % 9 + 1;
+        return String.format("wss://kr-ss%d.chat.naver.com/chat", serverId);
     }
 
     public @NotNull CompletableFuture<Integer> getFollowerCountAsync() {
@@ -96,7 +106,9 @@ public class ChzzkChannel {
     }
 
     public @NotNull ChzzkChatClient openChat() {
-        return ChzzkChatClient.open(this);
+        ChzzkChatClient chat = ChzzkChatClient.open(this);
+        chat.setWebsocketClientHandler(new ChzzkWebsocketClientHandler(chat));
+        return chat;
     }
 
 }
