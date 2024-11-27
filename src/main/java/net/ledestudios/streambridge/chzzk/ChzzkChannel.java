@@ -1,10 +1,14 @@
-package net.ledestudios.streambridge.chzzk.channel;
+package net.ledestudios.streambridge.chzzk;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import net.ledestudios.streambridge.chzzk.Chzzk;
+import net.ledestudios.streambridge.chzzk.type.ChzzkFollower;
+import net.ledestudios.streambridge.chzzk.type.ChzzkLiveDetail;
+import net.ledestudios.streambridge.chzzk.type.ChzzkLiveStatus;
 import net.ledestudios.streambridge.net.ChzzkHttpService;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class ChzzkChannel {
 
@@ -28,6 +32,10 @@ public class ChzzkChannel {
         String url = String.format("https://api.chzzk.naver.com/polling/v2/channels/%s/live-status", channel);
         JsonElement json = http.get(url);
         return gson.fromJson(json, ChzzkLiveStatus.class);
+    }
+
+    public @NotNull List<ChzzkFollower> getFollowers() {
+        return List.of();
     }
 
 }

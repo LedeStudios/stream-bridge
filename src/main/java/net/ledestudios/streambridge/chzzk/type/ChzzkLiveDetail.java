@@ -1,4 +1,4 @@
-package net.ledestudios.streambridge.chzzk.channel;
+package net.ledestudios.streambridge.chzzk.type;
 
 import lombok.Getter;
 import net.ledestudios.streambridge.util.Resolution;
