@@ -1,4 +1,4 @@
-package net.ledestudios.streambridge.net;
+package net.ledestudios.streambridge.net.http;
 
 import com.google.gson.JsonElement;
 import org.jetbrains.annotations.NotNull;

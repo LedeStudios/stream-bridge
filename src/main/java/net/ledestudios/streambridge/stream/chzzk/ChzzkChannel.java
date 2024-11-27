@@ -3,7 +3,8 @@ package net.ledestudios.streambridge.stream.chzzk;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import net.ledestudios.streambridge.net.ChzzkHttpService;
+import net.ledestudios.streambridge.net.http.ChzzkHttpService;
+import net.ledestudios.streambridge.stream.chzzk.chat.ChzzkChatClient;
 import net.ledestudios.streambridge.stream.chzzk.type.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -42,6 +43,16 @@ public class ChzzkChannel {
         return gson.fromJson(json, ChzzkLiveStatus.class);
     }
 
+    public @NotNull CompletableFuture<String> getChatChannelUrlAsync() {
+        return CompletableFuture.supplyAsync(this::getChatChannelUrl);
+    }
+
+    public @NotNull String getChatChannelUrl() {
+        return String.format(
+                "https://comm-api.game.naver.com/nng_main/v1/chats/access-token?channelId=%s&chatType=STREAMING",
+                getLiveStatus().getChatChannelId());
+    }
+
     public @NotNull CompletableFuture<Integer> getFollowerCountAsync() {
         return CompletableFuture.supplyAsync(this::getFollowerCount);
     }
@@ -78,6 +89,14 @@ public class ChzzkChannel {
                 channel, page, ChzzkFollowerHeader.SIZE_PER_PAGE);
         JsonElement json = http.get(url);
         return gson.fromJson(json, ChzzkFollowerPart.class);
+    }
+
+    public @NotNull CompletableFuture<ChzzkChatClient> openChatAsync() {
+        return CompletableFuture.supplyAsync(this::openChat);
+    }
+
+    public @NotNull ChzzkChatClient openChat() {
+        return ChzzkChatClient.open(this);
     }
 
 }
