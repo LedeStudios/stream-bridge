@@ -1,6 +1,7 @@
 package net.ledestudios.streambridge.chzzk.type;
 
 import lombok.Getter;
+import lombok.ToString;
 import net.ledestudios.streambridge.util.Resolution;
 import net.ledestudios.streambridge.util.Time;
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +10,7 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Getter
+@ToString
 public class ChzzkLiveDetail extends ChzzkLiveStatus {
 
     private int liveId;

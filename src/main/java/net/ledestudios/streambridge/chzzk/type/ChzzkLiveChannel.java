@@ -1,8 +1,10 @@
 package net.ledestudios.streambridge.chzzk.type;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class ChzzkLiveChannel {
 
     private String channelId;

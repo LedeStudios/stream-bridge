@@ -1,12 +1,14 @@
 package net.ledestudios.streambridge.chzzk.type;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
 
 @Getter
+@ToString
 public class ChzzkLiveStatus {
 
     protected String liveTitle;
