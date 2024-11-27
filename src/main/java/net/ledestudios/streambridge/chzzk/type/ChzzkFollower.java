@@ -28,7 +28,7 @@ public class ChzzkFollower {
         private boolean notification;
         private String followDate;
 
-        @NotNull Optional<ZonedDateTime> followDateAsZonedDateTime() {
+        @NotNull Optional<ZonedDateTime> getFollowDateAsZonedDateTime() {
             return Optional.ofNullable(Time.parse(followDate));
         }
     }
