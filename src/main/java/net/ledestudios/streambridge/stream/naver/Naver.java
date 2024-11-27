@@ -1,4 +1,4 @@
-package net.ledestudios.streambridge.service.naver;
+package net.ledestudios.streambridge.stream.naver;
 
 import net.ledestudios.streambridge.util.Chrome;
 import org.jetbrains.annotations.NotNull;

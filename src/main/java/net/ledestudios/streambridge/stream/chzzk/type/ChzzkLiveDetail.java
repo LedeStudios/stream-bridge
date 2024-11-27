@@ -1,4 +1,4 @@
-package net.ledestudios.streambridge.service.chzzk.type;
+package net.ledestudios.streambridge.stream.chzzk.type;
 
 import lombok.Getter;
 import lombok.ToString;

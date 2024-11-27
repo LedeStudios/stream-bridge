@@ -1,6 +1,6 @@
-package net.ledestudios.streambridge.service.chzzk;
+package net.ledestudios.streambridge.stream.chzzk;
 
-import net.ledestudios.streambridge.service.naver.Naver;
+import net.ledestudios.streambridge.stream.naver.Naver;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
