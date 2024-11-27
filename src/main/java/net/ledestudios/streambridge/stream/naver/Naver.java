@@ -15,8 +15,6 @@ public class Naver {
     private @Nullable String aut;
     private @Nullable String ses;
 
-    private boolean loggedIn;
-
     public static @NotNull Naver login(@NotNull String id, @NotNull String password) {
         return new Naver(id, password).login().join();
     }
