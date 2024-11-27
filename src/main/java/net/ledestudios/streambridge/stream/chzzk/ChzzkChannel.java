@@ -8,6 +8,7 @@ import net.ledestudios.streambridge.stream.chzzk.type.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class ChzzkChannel {
 
@@ -21,10 +22,18 @@ public class ChzzkChannel {
         this.channel = channel;
     }
 
+    public @NotNull CompletableFuture<ChzzkLiveDetail> getLiveDetailAsync() {
+        return CompletableFuture.supplyAsync(this::getLiveDetail);
+    }
+
     public @NotNull ChzzkLiveDetail getLiveDetail() {
         String url = String.format("https://api.chzzk.naver.com/service/v2/channels/%s/live-detail", channel);
         JsonElement json = http.get(url);
         return gson.fromJson(json, ChzzkLiveDetail.class);
+    }
+
+    public @NotNull CompletableFuture<ChzzkLiveStatus> getLiveStatusAsync() {
+        return CompletableFuture.supplyAsync(this::getLiveStatus);
     }
 
     public @NotNull ChzzkLiveStatus getLiveStatus() {
@@ -33,8 +42,16 @@ public class ChzzkChannel {
         return gson.fromJson(json, ChzzkLiveStatus.class);
     }
 
+    public @NotNull CompletableFuture<Integer> getFollowerCountAsync() {
+        return CompletableFuture.supplyAsync(this::getFollowerCount);
+    }
+
     public int getFollowerCount() {
         return getFollowerHeader().getTotalCount();
+    }
+
+    public @NotNull CompletableFuture<List<ChzzkFollower>> getFollowersAsync() {
+        return CompletableFuture.supplyAsync(this::getFollowers);
     }
 
     public @NotNull List<ChzzkFollower> getFollowers() {
