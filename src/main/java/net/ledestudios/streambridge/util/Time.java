@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class Time {
 
@@ -18,6 +19,11 @@ public class Time {
             return null;
         }
         return LocalDateTime.parse(date, FORMATTER).atZone(ZONE_ID);
+    }
+
+    public static @NotNull ZonedDateTime parse(long time) {
+        Date date = new Date(time);
+        return ZonedDateTime.ofInstant(date.toInstant(), ZONE_ID);
     }
 
 }

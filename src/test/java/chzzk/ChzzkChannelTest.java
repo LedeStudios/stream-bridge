@@ -4,7 +4,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import net.ledestudios.streambridge.stream.chzzk.Chzzk;
 import net.ledestudios.streambridge.stream.chzzk.ChzzkChannel;
 import net.ledestudios.streambridge.stream.naver.Naver;
-import net.ledestudios.streambridge.stream.chzzk.type.ChzzkFollower;
+import net.ledestudios.streambridge.stream.chzzk.type.channel.ChzzkFollower;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -53,6 +53,14 @@ public class ChzzkChannelTest {
                 System.out.println("Followers: " + followers);
             }).join();
         });
+    }
+
+    @Test
+    public void testChzzkChatAccessToken() {
+        Naver.loginAsync(env.get("NAVER_ID"), env.get("NAVER_PW")).thenAccept(naver -> {
+            final ChzzkChannel channel = Chzzk.login(naver).getChannel(CHANNEL_TO_TEST);
+            System.out.println(channel.getChatAccessToken());
+        }).join();
     }
 
 }

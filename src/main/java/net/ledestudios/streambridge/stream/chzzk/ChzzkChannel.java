@@ -3,10 +3,11 @@ package net.ledestudios.streambridge.stream.chzzk;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import lombok.Getter;
 import net.ledestudios.streambridge.net.http.ChzzkHttpService;
-import net.ledestudios.streambridge.net.ws.ChzzkWebsocketClientHandler;
+import net.ledestudios.streambridge.net.ws.client.ChzzkWebsocketClientHandler;
 import net.ledestudios.streambridge.stream.chzzk.chat.ChzzkChatClient;
-import net.ledestudios.streambridge.stream.chzzk.type.*;
+import net.ledestudios.streambridge.stream.chzzk.type.channel.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -17,11 +18,17 @@ public class ChzzkChannel {
     private final Gson gson = new Gson();
 
     private final @NotNull ChzzkHttpService http;
-    private final @NotNull String channel;
+
+    @Getter
+    private final @NotNull String channelId;
+
+    @Getter
+    private final @NotNull Chzzk chzzk;
 
     ChzzkChannel(@NotNull Chzzk chzzk, @NotNull String channel) {
         this.http = new ChzzkHttpService(chzzk);
-        this.channel = channel;
+        this.chzzk = chzzk;
+        this.channelId = channel;
     }
 
     public @NotNull CompletableFuture<ChzzkLiveDetail> getLiveDetailAsync() {
@@ -29,7 +36,7 @@ public class ChzzkChannel {
     }
 
     public @NotNull ChzzkLiveDetail getLiveDetail() {
-        String url = String.format("https://api.chzzk.naver.com/service/v2/channels/%s/live-detail", channel);
+        String url = String.format("https://api.chzzk.naver.com/service/v2/channels/%s/live-detail", channelId);
         JsonElement json = http.get(url);
         return gson.fromJson(json, ChzzkLiveDetail.class);
     }
@@ -39,24 +46,34 @@ public class ChzzkChannel {
     }
 
     public @NotNull ChzzkLiveStatus getLiveStatus() {
-        String url = String.format("https://api.chzzk.naver.com/polling/v2/channels/%s/live-status", channel);
+        String url = String.format("https://api.chzzk.naver.com/polling/v2/channels/%s/live-status", channelId);
         JsonElement json = http.get(url);
         return gson.fromJson(json, ChzzkLiveStatus.class);
     }
 
-    public @NotNull CompletableFuture<String> getChatAccessTokenAsync() {
+    public @NotNull CompletableFuture<ChzzkChatAccessToken> getChatAccessTokenAsync() {
         return CompletableFuture.supplyAsync(this::getChatAccessToken);
     }
 
-    public @NotNull String getChatAccessToken() {
-        return String.format(
-                "https://comm-api.game.naver.com/nng_main/v1/chats/access-token?channelId=%s&chatType=STREAMING",
-                getLiveStatus().getChatChannelId());
+    public @NotNull ChzzkChatAccessToken getChatAccessToken() {
+        String chatId = getLiveStatus().getChatChannelId();
+        return getChatAccessToken(chatId);
+    }
+
+    public @NotNull CompletableFuture<ChzzkChatAccessToken> getChatAccessTokenAsync(@NotNull String chatId) {
+        return CompletableFuture.supplyAsync(() -> getChatAccessToken(chatId));
+    }
+
+    public @NotNull ChzzkChatAccessToken getChatAccessToken(@NotNull String chatId) {
+        String url = String.format(
+                "https://comm-api.game.naver.com/nng_main/v1/chats/access-token?channelId=%s&chatType=STREAMING", chatId);
+        JsonElement json = http.get(url);
+        return gson.fromJson(json, ChzzkChatAccessToken.class);
     }
 
     public @NotNull String getChatWebsocketUrl() {
         int serverId = 0;
-        for (char i : channel.toCharArray()) {
+        for (char i : channelId.toCharArray()) {
             serverId += Character.getNumericValue(i);
         }
         serverId = Math.abs(serverId) % 9 + 1;
@@ -88,7 +105,7 @@ public class ChzzkChannel {
     private @NotNull ChzzkFollowerHeader getFollowerHeader() {
         String url = String.format(
                 "https://api.chzzk.naver.com/manage/v1/channels/%s/followers?page=0&size=%d",
-                channel, ChzzkFollowerHeader.SIZE_PER_PAGE);
+                channelId, ChzzkFollowerHeader.SIZE_PER_PAGE);
         JsonElement json = http.get(url);
         return gson.fromJson(json, ChzzkFollowerHeader.class);
     }
@@ -96,19 +113,19 @@ public class ChzzkChannel {
     private @NotNull ChzzkFollowerPart getFollowerPart(int page) {
         String url = String.format(
                 "https://api.chzzk.naver.com/manage/v1/channels/%s/followers?page=%d&size=%d",
-                channel, page, ChzzkFollowerHeader.SIZE_PER_PAGE);
+                channelId, page, ChzzkFollowerHeader.SIZE_PER_PAGE);
         JsonElement json = http.get(url);
         return gson.fromJson(json, ChzzkFollowerPart.class);
     }
 
-    public @NotNull CompletableFuture<ChzzkChatClient> openChatAsync() {
-        return CompletableFuture.supplyAsync(this::openChat);
+    public @NotNull CompletableFuture<ChzzkChatClient> createChatClientAsync() {
+        return CompletableFuture.supplyAsync(this::createChatClient);
     }
 
-    public @NotNull ChzzkChatClient openChat() {
-        ChzzkChatClient chat = ChzzkChatClient.open(this);
-        chat.setWebsocketClientHandler(new ChzzkWebsocketClientHandler(chat));
-        return chat;
+    public @NotNull ChzzkChatClient createChatClient() {
+        ChzzkChatClient client = ChzzkChatClient.create(this);
+        client.setWebsocketClientHandler(new ChzzkWebsocketClientHandler(client));
+        return client;
     }
 
 }

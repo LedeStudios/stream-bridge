@@ -33,6 +33,10 @@ public class Chzzk {
         return new ChzzkChannel(this, channelId);
     }
 
+    public @NotNull ChzzkUserGroup getUserGroup() {
+        return new ChzzkUserGroup(this);
+    }
+
     public boolean isAnonymous() {
         return aut == null || ses == null;
     }
