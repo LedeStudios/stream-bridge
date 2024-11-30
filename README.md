@@ -8,7 +8,7 @@ repositories {
 ```
 ```gradle
 dependencies {
-    implementation 'com.github.LedeStudios:stream-bridge:0.0.1'
+    implementation 'com.github.LedeStudios:stream-bridge:0.0.2'
 }
 ```
 
@@ -25,6 +25,6 @@ dependencies {
 <dependency>
     <groupId>com.github.LedeStudios</groupId>
     <artifactId>stream-bridge</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 </dependency>
 ```
