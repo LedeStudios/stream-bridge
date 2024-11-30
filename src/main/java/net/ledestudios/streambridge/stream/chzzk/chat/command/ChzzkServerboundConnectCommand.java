@@ -2,7 +2,7 @@ package net.ledestudios.streambridge.stream.chzzk.chat.command;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.ledestudios.streambridge.stream.chzzk.ChzzkChannel;
+import net.ledestudios.streambridge.stream.chzzk.ChzzkChannelManager;
 import net.ledestudios.streambridge.stream.chzzk.chat.ChzzkChatClient;
 import net.ledestudios.streambridge.stream.chzzk.chat.message.ChzzkMessageServerboundConnect;
 import net.ledestudios.streambridge.stream.chzzk.type.user.ChzzkUser;
@@ -15,7 +15,7 @@ public class ChzzkServerboundConnectCommand extends ChzzkCommandExecutor {
 
     @Override
     public void execute(@NotNull ChzzkChatClient chat, @Nullable String message) {
-        final ChzzkChannel channel = chat.getChannel();
+        final ChzzkChannelManager channel = chat.getChannel();
 
         final String auth = channel.getChzzk().isAnonymous() ? "SEND" : "READ";
         final ChzzkUser user = chat.getCurrentUser();

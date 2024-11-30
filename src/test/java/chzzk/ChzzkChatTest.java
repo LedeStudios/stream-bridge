@@ -22,7 +22,7 @@ public class ChzzkChatTest {
     public void testSendChat() {
         Naver.loginAsync(env.get("NAVER_ID"), env.get("NAVER_PW")).thenAccept(naver -> {
             Chzzk chzzk = Chzzk.login(naver);
-            ChzzkChatClient chat = chzzk.getChannel("").createChatClient();
+            ChzzkChatClient chat = chzzk.getChannelManager("").createChatClient();
             // chat.sendMessage("ㅋㅋㅋㅋㅋㅋㅋㅋ");
         });
     }
@@ -31,7 +31,7 @@ public class ChzzkChatTest {
     public void testChzzkChatConnect() {
         Naver.loginAsync(env.get("NAVER_ID"), env.get("NAVER_PW")).thenAccept(naver -> {
             Chzzk chzzk = Chzzk.login(naver);
-            ChzzkChatClient chat = chzzk.getChannel(CHANNEL_TO_TEST).createChatClient();
+            ChzzkChatClient chat = chzzk.getChannelManager(CHANNEL_TO_TEST).createChatClient();
             chat.addListener(new ChzzkChatListener() {
 
                 @Override

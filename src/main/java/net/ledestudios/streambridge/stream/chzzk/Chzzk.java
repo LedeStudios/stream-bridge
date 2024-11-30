@@ -29,12 +29,12 @@ public class Chzzk {
         this.ses = ses;
     }
 
-    public @NotNull ChzzkChannel getChannel(@NotNull String channelId) {
-        return new ChzzkChannel(this, channelId);
+    public @NotNull ChzzkChannelManager getChannelManager(@NotNull String channelId) {
+        return new ChzzkChannelManager(this, channelId);
     }
 
-    public @NotNull ChzzkUserGroup getUserGroup() {
-        return new ChzzkUserGroup(this);
+    public @NotNull ChzzkUserManager getUserManager() {
+        return new ChzzkUserManager(this);
     }
 
     public boolean isAnonymous() {

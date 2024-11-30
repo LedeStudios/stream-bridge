@@ -7,7 +7,7 @@ import net.ledestudios.streambridge.net.http.ChzzkHttpService;
 import net.ledestudios.streambridge.stream.chzzk.type.user.ChzzkUser;
 import org.jetbrains.annotations.NotNull;
 
-public class ChzzkUserGroup {
+public class ChzzkUserManager {
 
     private final Gson gson = new Gson();
     private final @NotNull ChzzkHttpService http;
@@ -15,7 +15,7 @@ public class ChzzkUserGroup {
     @Getter
     private final @NotNull Chzzk chzzk;
 
-    ChzzkUserGroup(@NotNull Chzzk chzzk) {
+    ChzzkUserManager(@NotNull Chzzk chzzk) {
         this.http = new ChzzkHttpService(chzzk);
         this.chzzk = chzzk;
     }

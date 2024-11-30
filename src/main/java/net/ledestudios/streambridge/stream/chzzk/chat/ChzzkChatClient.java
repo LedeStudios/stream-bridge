@@ -6,7 +6,7 @@ import lombok.Setter;
 import net.ledestudios.streambridge.net.ws.client.WebsocketClientHandler;
 import net.ledestudios.streambridge.net.ws.health.ChzzkChatHealthChecker;
 import net.ledestudios.streambridge.net.ws.health.HealthChecker;
-import net.ledestudios.streambridge.stream.chzzk.ChzzkChannel;
+import net.ledestudios.streambridge.stream.chzzk.ChzzkChannelManager;
 import net.ledestudios.streambridge.stream.chzzk.type.user.ChzzkUser;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 public class ChzzkChatClient extends WebSocketClient {
 
     @Getter
-    private final @NotNull ChzzkChannel channel;
+    private final @NotNull ChzzkChannelManager channel;
 
     @Getter
     private final @NotNull Set<ChzzkChatListener> listeners;
@@ -44,18 +44,18 @@ public class ChzzkChatClient extends WebSocketClient {
     @Getter
     private final @NotNull HealthChecker healthChecker;
 
-    public static @NotNull ChzzkChatClient create(@NotNull ChzzkChannel channel) {
+    public static @NotNull ChzzkChatClient create(@NotNull ChzzkChannelManager channel) {
         return new ChzzkChatClient(channel);
     }
 
-    private ChzzkChatClient(@NotNull ChzzkChannel channel) {
+    private ChzzkChatClient(@NotNull ChzzkChannelManager channel) {
         super(URI.create(channel.getChatWebsocketUrl()));
         this.channel = channel;
         this.listeners = Sets.newConcurrentHashSet();
         this.healthChecker = new ChzzkChatHealthChecker(this);
 
         if (!channel.getChzzk().isAnonymous()) {
-            this.currentUser = channel.getChzzk().getUserGroup().getCurrentUser();
+            this.currentUser = channel.getChzzk().getUserManager().getCurrentUser();
         } else {
             this.currentUser = null;
         }

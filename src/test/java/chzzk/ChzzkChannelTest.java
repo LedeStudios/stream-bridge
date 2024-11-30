@@ -2,7 +2,7 @@ package chzzk;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import net.ledestudios.streambridge.stream.chzzk.Chzzk;
-import net.ledestudios.streambridge.stream.chzzk.ChzzkChannel;
+import net.ledestudios.streambridge.stream.chzzk.ChzzkChannelManager;
 import net.ledestudios.streambridge.stream.naver.Naver;
 import net.ledestudios.streambridge.stream.chzzk.type.channel.ChzzkFollower;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ public class ChzzkChannelTest {
     @Test
     public void testChzzkLiveStatus() {
         Assertions.assertDoesNotThrow(() -> {
-            final ChzzkChannel channel = Chzzk.anonymous().getChannel(CHANNEL_TO_TEST);
+            final ChzzkChannelManager channel = Chzzk.anonymous().getChannelManager(CHANNEL_TO_TEST);
             System.out.println("LiveStatus: " + channel.getLiveStatus());
         });
     }
@@ -28,7 +28,7 @@ public class ChzzkChannelTest {
     @Test
     public void testChzzkLiveDetail() {
         Assertions.assertDoesNotThrow(() -> {
-           final ChzzkChannel channel = Chzzk.anonymous().getChannel(CHANNEL_TO_TEST);
+           final ChzzkChannelManager channel = Chzzk.anonymous().getChannelManager(CHANNEL_TO_TEST);
            System.out.println("LiveDetail: " + channel.getLiveDetail());
         });
     }
@@ -37,7 +37,7 @@ public class ChzzkChannelTest {
     public void testChzzkFollowerCount() {
         Assertions.assertDoesNotThrow(() -> {
             Naver.loginAsync(env.get("NAVER_ID"), env.get("NAVER_PW")).thenAccept(naver -> {
-                final ChzzkChannel channel = Chzzk.login(naver).getChannel(CHANNEL_TO_TEST);
+                final ChzzkChannelManager channel = Chzzk.login(naver).getChannelManager(CHANNEL_TO_TEST);
                 System.out.println("FollowerCount: " + channel.getFollowerCount());
             }).join();
         });
@@ -47,7 +47,7 @@ public class ChzzkChannelTest {
     public void testChzzkFollowers() {
         Assertions.assertDoesNotThrow(() -> {
             Naver.loginAsync(env.get("NAVER_ID"), env.get("NAVER_PW")).thenAccept(naver -> {
-                final ChzzkChannel channel = Chzzk.login(naver).getChannel(CHANNEL_TO_TEST);
+                final ChzzkChannelManager channel = Chzzk.login(naver).getChannelManager(CHANNEL_TO_TEST);
                 List<ChzzkFollower> followers = channel.getFollowers();
                 System.out.println("FollowerCount: " + followers.size());
                 System.out.println("Followers: " + followers);
@@ -58,7 +58,7 @@ public class ChzzkChannelTest {
     @Test
     public void testChzzkChatAccessToken() {
         Naver.loginAsync(env.get("NAVER_ID"), env.get("NAVER_PW")).thenAccept(naver -> {
-            final ChzzkChannel channel = Chzzk.login(naver).getChannel(CHANNEL_TO_TEST);
+            final ChzzkChannelManager channel = Chzzk.login(naver).getChannelManager(CHANNEL_TO_TEST);
             System.out.println(channel.getChatAccessToken());
         }).join();
     }

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class ChzzkChannel {
+public class ChzzkChannelManager {
 
     private final Gson gson = new Gson();
 
@@ -25,7 +25,7 @@ public class ChzzkChannel {
     @Getter
     private final @NotNull Chzzk chzzk;
 
-    ChzzkChannel(@NotNull Chzzk chzzk, @NotNull String channel) {
+    ChzzkChannelManager(@NotNull Chzzk chzzk, @NotNull String channel) {
         this.http = new ChzzkHttpService(chzzk);
         this.chzzk = chzzk;
         this.channelId = channel;
