@@ -1,6 +1,7 @@
 package net.ledestudios.streambridge.stream.chzzk.type.chat;
 
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.ZonedDateTime;
@@ -17,28 +18,36 @@ public class ChzzkChat {
     private Extras extras;
     private @Nullable Profile profile;
 
+    public boolean hasProfile() {
+        return profile != null;
+    }
+
+    public @NotNull String getUsername() {
+        return profile != null ? profile.getNickname() : "";
+    }
+
     @Getter
     @Setter
     @ToString
     public static class Extras {
 
-        String donationType;
-        String osType;
+        private String donationType;
+        private String osType;
 
-        int payAmount = -1;
+        private int payAmount = -1;
 
         // Subscription
-        int month = 0;
-        String tierName = "";
+        private int month = 0;
+        private String tierName = "";
 
         // Mission
-        int durationTime;
-        String missionDonationId;
-        String missionCreatedTime;
-        String missionEndTime;
-        String missionText;
-        String status;
-        boolean success;
+        private int durationTime;
+        private String missionDonationId;
+        private String missionCreatedTime;
+        private String missionEndTime;
+        private String missionText;
+        private String status;
+        private boolean success;
 
     }
 
